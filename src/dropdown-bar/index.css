@@ -1,0 +1,85 @@
+/* Style for the dropdown container */
+.dropdown {
+    position: absolute;
+    top: 75px;
+    right: 20px;
+    background-color: #141414;
+    color: #ffffff;
+    width: 250px;
+    z-index: 1;
+}
+
+/* Style for the dropdown header */
+.dropdown-header {
+    padding: 10px;
+    border-bottom: 1px solid #ffffff;
+}
+
+/* Style for the dropdown body */
+.dropdown-body {
+    position: relative;
+    max-height: 250px;
+    overflow-y: scroll;
+    border-top: 1px solid #ffffff;
+}
+
+/* Style for the dropdown items */
+.dropdown-body ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown-body li {
+    padding: 10px;
+    border-bottom: 1px solid #ffffff;
+}
+
+/* Style for the profile dropdown item */
+.profile-dropdown li {
+    display: flex;
+    align-items: center;
+}
+
+.profile-dropdown li img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+/* Style for the dropdown button */
+.dropdown-body button {
+    display: block;
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: transparent;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.dropdown-body button:hover {
+    background-color: #ffffff;
+    color: #141414;
+}
+
+.text-secondary {
+    color: rgb(126, 124, 124);
+    font-size: small;
+}
+
+.text-primary {
+    color: rgb(197, 195, 195);
+    font-size: medium;
+}
+
+.notification-image {
+    width: 60px;
+    height: 50px;
+    margin-right: 10px;
+}
+.notification-content {
+     display: flex;
+}
