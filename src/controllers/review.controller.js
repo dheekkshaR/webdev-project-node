@@ -3,20 +3,24 @@ import reviewModel from "../models/review.model.js";
 
 const create = async (req, res) => {
   try {
+
+    console.log("here in create review 21");
     const { movieId } = req.params;
+    console.log("here in create review 2");
+    console.log(movieId);
 
     const review = new reviewModel({
-      user: req.user.id,
-      movieId,
       ...req.body
     });
+
+    console.log("here in create review 3");
+    console.log(review);
 
     await review.save();
 
     responseHandler.created(res, {
       ...review._doc,
       id: review.id,
-      user: req.user
     });
   } catch {
     responseHandler.error(res);

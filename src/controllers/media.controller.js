@@ -21,7 +21,6 @@ const getList = async (req, res) => {
 };
 
 const getGenres = async (req, res) => {
-    console.log("here11111113")
   try {
     const { mediaType, mediaId  } = req.params;
 
@@ -34,7 +33,6 @@ const getGenres = async (req, res) => {
 };
 
 const search = async (req, res) => {
-    console.log("here11111112");
 
   try {
     const { mediaType } = req.params;
@@ -53,7 +51,6 @@ const search = async (req, res) => {
 };
 
 const getReviews = async (req, res) => {
-    console.log("here11111111");
 
   try {
     const { mediaType, mediaId } = req.params;
@@ -70,7 +67,6 @@ const getReviews = async (req, res) => {
 }
 
 const getCredits = async (req, res) => {
-    console.log("here11111110");
 
   try {
     const { mediaType, mediaId } = req.params;
@@ -84,7 +80,6 @@ const getCredits = async (req, res) => {
 }
 
 const getRecommendations = async (req, res) => {
-    console.log("here11111110");
 
   try {
     const { mediaType, mediaId } = req.params;
@@ -98,7 +93,7 @@ const getRecommendations = async (req, res) => {
 }
 
 const getVideos = async (req, res) => {
-    console.log("here11111110");
+
 
   try {
     const { mediaType, mediaId } = req.params;
@@ -112,21 +107,17 @@ const getVideos = async (req, res) => {
 }
 
 const getDetail = async (req, res) => {
-    console.log("here1111111");
   try {
 
-      console.log("here212");
 
     const { mediaType, mediaId } = req.params;
 
     const params = { mediaType, mediaId };
 
-            console.log("here213.1");
 
 
     const media = await tmdbApi.mediaDetail(params);
 
-        console.log("here213");
 
     media.credits = await tmdbApi.mediaCredits(params);
 
@@ -146,7 +137,6 @@ const getDetail = async (req, res) => {
 
     console.log("here1");
 
-    console.log(media.recommend);
 
     console.log("here2");
 
@@ -154,24 +144,14 @@ const getDetail = async (req, res) => {
 
     media.reviews = reviews.results;
 
-        console.log(media.reviews);
 
 
 
     media.images = await tmdbApi.mediaImages(params);
 
-    const tokenDecoded = tokenMiddlerware.tokenDecode(req);
 
-    if (tokenDecoded) {
-      const user = await userModel.findById(tokenDecoded.data);
 
-      if (user) {
-        const isFavorite = await favoriteModel.findOne({ user: user.id, mediaId });
-        media.isFavorite = isFavorite !== null;
-      }
-    }
-
-    media.reviews = await reviewModel.find({ mediaId }).populate("user").sort("-createdAt");
+//    media.reviews = await reviewModel.find({ mediaId }).populate("user").sort("-createdAt");
 
     responseHandler.ok(res, media);
   } catch (e) {

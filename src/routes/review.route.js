@@ -15,7 +15,6 @@ router.get(
 
 router.post(
   "/",
-  tokenMiddleware.auth,
   body("mediaId")
     .exists().withMessage("mediaId is required")
     .isLength({ min: 1 }).withMessage("mediaId can not be empty"),
@@ -29,7 +28,6 @@ router.post(
     .exists().withMessage("mediaTitle is required"),
   body("mediaPoster")
     .exists().withMessage("mediaPoster is required"),
-  requestHandler.validate,
   reviewController.create
 );
 
