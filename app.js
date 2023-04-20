@@ -14,4 +14,6 @@ const app = express();
 app.use(express.json());
 HelloController(app);
 UserController(app);
+app.use("/", routes);
+
 app.listen(4000);

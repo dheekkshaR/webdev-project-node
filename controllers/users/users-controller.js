@@ -1,7 +1,4 @@
-
-
-
-import * as usersDao from "../users/userDao.js";
+import * as usersDao from "./userDao.js";
 
 
 const UserController = (app) => {
