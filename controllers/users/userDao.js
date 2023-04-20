@@ -23,3 +23,18 @@ export const addMovie =  (id,playlistMovie) =>
      userModel.findOneAndUpdate({_id:id},
         {$push: { playlist: playlistMovie}});
 }
+
+//create any type of user
+//update for profile
+//delete user if admin
+//can see all users if admin
+//login, just add to state- return true or false (invalid or valid)
+//add playlist
+
+//networks watch list- just for all uids in movies with tat provider - display
+
+
+//2 schemas
+//one for movies
+//one for users
+

@@ -9,8 +9,11 @@ const UserController = (app) => {
     app.get("/api/users/login/:username/:password", loginUser);
     app.get("/api/users", findAllUsers);
     app.get("/api/users/:id", findUserById);
-    app.delete("/api/register/users/:id", deleteUser);
 
+    //tocheck not working idk why
+    app.delete("/api/users/:id", deleteUser);
+
+    //error
     app.put("/api/update/users/:id", updateUser);
     app.put("/api/update/users/addToPlaylist", addMovie);
     app.put("/api/update/users/profile", profile);
@@ -23,7 +26,9 @@ const createUser = (req, res) => {
 const loginUser = (req, res) => {
     usersDao
         .findUserByUsernamePassword(req.params.username, req.params.password)
-        .then((user) => res.json(user));
+        .then((user) => res.json(user))
+        .then((user)=> res.json("") );
+
 };
 
 const findAllUsers = (req, res) =>
@@ -31,6 +36,11 @@ const findAllUsers = (req, res) =>
 
 const deleteUser = (req, res) =>
     usersDao.deleteUser(req.params.id).then((status) => res.send(status));
+
+export const deleteUser = async (req,res) => {
+    const response = await axios.delete(`${USERS_API}/${req.params.id}`)
+    return response.data
+}
 
 const findUserById = (req, res) =>
     usersDao
@@ -97,9 +107,10 @@ const logout = (req, res) => {
 const profile = (req, res) => {
     console.log("The current user session is :", req.session)
     if (req.session["profile"]) {
+        console.log("req.session[\"profile\"]")
         res.send(req.session["profile"]);
     } else {
-        //console.log("Inside the else. Request is :", req)
+        console.log("Inside the else. Request is :", req)
         res.sendStatus(403);
     }
 };
