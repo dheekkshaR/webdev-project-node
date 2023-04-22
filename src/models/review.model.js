@@ -4,6 +4,15 @@ import modelOptions from "./model.options.js";
 export default mongoose.model(
   "Review",
   mongoose.Schema({
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    },
+    author: {
+        type: String,
+        required: true
+    },
     content: {
       type: String,
       required: true

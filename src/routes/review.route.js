@@ -9,12 +9,15 @@ const router = express.Router({ mergeParams: true });
 router.get(
 
 
-  "/",
+  "/:mediaId",
   reviewController.getReviewsOfUser
 );
 
 router.post(
   "/",
+  body("userId")
+    .exists().withMessage("userId is required")
+    .isLength({ min: 1 }).withMessage("userId can not be empty"),
   body("mediaId")
     .exists().withMessage("mediaId is required")
     .isLength({ min: 1 }).withMessage("mediaId can not be empty"),

@@ -13,6 +13,12 @@ router.get(
   favoriteController.getFavoritesOfUser
 );
 
+
+router.get(
+    "/favorites/:userId",
+    favoriteController.getFavoritesOfUser2
+);
+
 router.post(
   "/favorites",
   body("mediaType")

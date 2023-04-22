@@ -4,6 +4,12 @@ import modelOptions from "./model.options.js";
 export default mongoose.model(
   "Favorite",
   mongoose.Schema({
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+
+    },
     mediaType: {
       type: String,
       enum: ["tv", "movie"],

@@ -48,9 +48,14 @@ const remove = async (req, res) => {
 
 const getReviewsOfUser = async (req, res) => {
   try {
-    const reviews = await reviewModel.find({
-      user: req.user.id
+    console.log("here in get reviews of user 1");
+    console.log(req.params.mediaId);
+
+    const reviews = await reviewModel.find({ mediaId: req.params.mediaId
     }).sort("-createdAt");
+
+    console.log("here in get reviews of user 2");
+    console.log(reviews);
 
     responseHandler.ok(res, reviews);
   } catch {

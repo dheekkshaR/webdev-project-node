@@ -20,10 +20,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+
+UserController(app);
+
 app.use("/", routes);
 
-HelloController(app);
-UserController(app);
 
 const port = process.env.PORT || 5004;
 

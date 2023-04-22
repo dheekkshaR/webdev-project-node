@@ -11,11 +11,15 @@ const UserController = (app) => {
     app.put("/api/update/users/:id", updateUser);
     app.put("/api/update/users/addToPlaylist", addMovie);
     app.put("/api/update/users/profile", profile);
+    app.get("api/users/:username", findUserByUsername);
 };
 
 const createUser = (req, res) => {
     usersDao.creatUser(req.body).then((createdUser) => res.json(createdUser));
 };
+
+
+
 
 const loginUser = (req, res) => {
     usersDao
@@ -33,6 +37,11 @@ const findUserById = (req, res) =>
     usersDao
         .findUserById(req.params.id)
         .then((user) => res.json(user));
+
+
+const findUserByUsername = (req, res) =>
+    usersDao.findUserByUsername(req.params.username).then((user) => res.json(user));
+
 
 const updateUser = (req, res) => {
     usersDao

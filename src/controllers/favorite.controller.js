@@ -4,22 +4,23 @@ import favoriteModel from "../models/favorite.model.js";
 const addFavorite = async (req, res) => {
   try {
 
-    console.log("here in add favorite 2");
-//    console.log(req);
-//    const isFavorite = await favoriteModel.findOne({
-//      user: req.user.id,
-//      mediaId: req.body.mediaId
-//    });
+    console.log("here in add favorite........");
+    console.log(req.body);
+    const isFavorite = await favoriteModel.findOne({
+      mediaId: req.body.mediaId,
+      userId: req.body.userId
+    });
 
     console.log("here in add favorite 3");
-//    console.log(isFavorite);
-//
-//    if (isFavorite) return responseHandler.ok(res, isFavorite);
+    console.log(isFavorite);
+
+    if (isFavorite) return responseHandler.ok(res, isFavorite);
 
     console.log("here in add favorite 4");
 
     const favorite = new favoriteModel({
       ...req.body,
+
     });
 
     console.log(favorite)
@@ -61,10 +62,12 @@ const removeFavorite = async (req, res) => {
   }
 };
 
+
+
 const getFavoritesOfUser = async (req, res) => {
+
   try {
 
-    console.log("here1");
     const favorite = await favoriteModel.find().sort("-createdAt");
 
     responseHandler.ok(res, favorite);
@@ -73,4 +76,19 @@ const getFavoritesOfUser = async (req, res) => {
   }
 };
 
-export default { addFavorite, removeFavorite, getFavoritesOfUser };
+const getFavoritesOfUser2 = async (req, res) => {
+    console.log("here2  nin getFavoritesOfUser");
+    console.log(req.params.userId);
+  try {
+
+    console.log("here3 in getFavoritesOfUser");
+    const favorite = await favoriteModel.find( {userId: req.params.userId}).sort("-createdAt");
+    console.log("here4 in getFavoritesOfUser: ", favorite);
+
+    responseHandler.ok(res, favorite);
+  } catch {
+    responseHandler.error(res);
+  }
+};
+
+export default { addFavorite, removeFavorite, getFavoritesOfUser, getFavoritesOfUser2 };
