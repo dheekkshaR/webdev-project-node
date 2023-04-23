@@ -29,16 +29,20 @@ const create = async (req, res) => {
 
 const remove = async (req, res) => {
   try {
+
+    console.log("here in remove review 1");
     const { reviewId } = req.params;
 
     const review = await reviewModel.findOne({
       _id: reviewId,
-      user: req.user.id
     });
+
+    console.log("here in remove review 2");
+    console.log(review);
 
     if (!review) return responseHandler.notfound(res);
 
-    await review.remove();
+    await review.deleteOne();
 
     responseHandler.ok(res);
   } catch {

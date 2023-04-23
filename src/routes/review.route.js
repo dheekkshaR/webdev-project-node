@@ -36,7 +36,6 @@ router.post(
 
 router.delete(
   "/:reviewId",
-  tokenMiddleware.auth,
   reviewController.remove
 );
 
