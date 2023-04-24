@@ -23,11 +23,11 @@ import mongoose from "mongoose";
 const schema = mongoose.Schema(
     {
 
-        username: {type: String, unique: true, required: true},
-        password: {type: String, required: true},
+        username:  String,
+        password: String,
         firstName:String,
         lastName:String,
-        type: {type:String, enum: ['USER', 'ADMIN', 'PROVIDER'] },
+        type: String,
         email: String,
         phone: String,
         address: Number,

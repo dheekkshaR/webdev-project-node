@@ -15,7 +15,12 @@ export const deleteUser = (id) => userModel.deleteOne({ _id: id });
 export const findUserById = (id) => userModel.find().findOne({ _id: id });
 
 export const updateUser = (id, user) =>
-    userModel.find().findOneAndUpdate({ _id: id }, { $set: user });
+    userModel.updateOne({ _id: id }, { $set: user});
+    //userModel.find().findOneAndUpdate({ _id: id }, { $set: user });
+
+
+
+
 
 export const addMovie =  (id,playlistMovie) =>
 {
