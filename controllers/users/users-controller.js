@@ -1,4 +1,4 @@
-import * as usersDao from "./userDao.js";
+import * as usersDao from "../users/userDao.js";
 
 
 const UserController = (app) => {
@@ -6,48 +6,84 @@ const UserController = (app) => {
     app.get("/api/users/login/:username/:password", loginUser);
     app.get("/api/users", findAllUsers);
     app.get("/api/users/:id", findUserById);
-    app.delete("/api/register/users/:id", deleteUser);
 
-    app.put("/api/update/users/:id", updateUser);
-    app.put("/api/update/users/addToPlaylist", addMovie);
-    app.put("/api/update/users/profile", profile);
-    app.get("api/users/:username", findUserByUsername);
+    //tocheck not working idk why
+    app.delete("/api/users/delete/:id", deleteUser);
+
+    //error
+    app.put("/api/users/update/:id", updateUser);
+    //app.put("/api/update/users/addToPlaylist", addMovie);
+    //app.put("/api/update/users/profile", profile);
 };
 
 const createUser = (req, res) => {
     usersDao.creatUser(req.body).then((createdUser) => res.json(createdUser));
 };
 
-
-
-
-const loginUser = (req, res) => {
-    usersDao
-        .findUserByUsernamePassword(req.params.username, req.params.password)
-        .then((user) => res.json(user));
+const loginUser = async (req, res) => {
+    try {
+        const user = await usersDao.findUserByUsernamePassword(req.params.username, req.params.password);
+        res.json(user);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "An error occurred while trying to log in the user." });
+    }
 };
 
-const findAllUsers = (req, res) =>
-    usersDao.findAllUsers().then((users) => res.json(users));
 
-const deleteUser = (req, res) =>
-    usersDao.deleteUser(req.params.id).then((status) => res.send(status));
+const findAllUsers = async(req, res) => {
+    const users = await usersDao.findAllUsers()
+    res.json(users)
+    return
+   // usersDao.findAllUsers().then((users) => res.json(users));
+}
+
+const deleteUser = async(req, res) => {
+   const status= await usersDao.deleteUser(req.params.id);
+    console.log(status);
+   // res.sendStatus(200);
+   res.json(status)
+   // usersDao.deleteUser(req.params.id).then((status) => res.json(status));
+}
+
+// export const deleteUser = async (req,res) => {
+//     const response = await axios.delete(`${USERS_API}/${req.params.id}`)
+//     return response.data
+// }
 
 const findUserById = (req, res) =>
     usersDao
         .findUserById(req.params.id)
         .then((user) => res.json(user));
 
+const updateUser = async (req, res) => {
+    // const status= await usersDao
+    //     .updateUser(req.params.id, req.body);
+    // console.log(status);
+    //     res.sendStatus(200);
 
-const findUserByUsername = (req, res) =>
-    usersDao.findUserByUsername(req.params.username).then((user) => res.json(user));
-
-
-const updateUser = (req, res) => {
-    usersDao
-        .updateUser(req.params.id, req.body)
-        .then((status) => res.send(status));
+    const existingUser = await usersDao.findUserById(req.params.id);
+    if(existingUser)
+    {
+        const status= await usersDao.updateUser(req.params.id, req.body)
+       res.sendStatus(200) ;
+        console.log(status);
+        //res.status(201).send({message:"Updated User",updatedUser:updatedUser});
+    }
+    else
+        res.sendStatus(404);
 };
+
+
+
+
+
+
+
+
+
+
+
 const addMovie = (req,res) => {
     const idd= req.body.id;
     const movie= req.body.movie;
@@ -56,7 +92,7 @@ const addMovie = (req,res) => {
     if(existingUser)
     {
          usersDao.addMovie(idd,movie)
-        res.status(201).send({message:"Added Bookmark"});
+        res.status(201).send({message:"Added Movie"});
     }
     else
         res.send({message:"No User"});
@@ -103,9 +139,10 @@ const logout = (req, res) => {
 const profile = (req, res) => {
     console.log("The current user session is :", req.session)
     if (req.session["profile"]) {
+        console.log("req.session[\"profile\"]")
         res.send(req.session["profile"]);
     } else {
-        //console.log("Inside the else. Request is :", req)
+        console.log("Inside the else. Request is :", req)
         res.sendStatus(403);
     }
 };

@@ -1,4 +1,4 @@
- import userModel from "./usersModel.js";
+import userModel from "./usersModel.js";
 
 export const creatUser = (user) => userModel.create(user);
 
@@ -14,10 +14,13 @@ export const deleteUser = (id) => userModel.deleteOne({ _id: id });
 
 export const findUserById = (id) => userModel.find().findOne({ _id: id });
 
-export const findUserByUsername = (username) => userModel.find().findOne({ username: username });
-
 export const updateUser = (id, user) =>
-    userModel.find().findOneAndUpdate({ _id: id }, { $set: user });
+    userModel.updateOne({ _id: id }, { $set: user});
+    //userModel.find().findOneAndUpdate({ _id: id }, { $set: user });
+
+
+
+
 
 export const addMovie =  (id,playlistMovie) =>
 {
